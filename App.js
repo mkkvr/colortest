@@ -1,9 +1,9 @@
 
 import {createStackNavigator, createAppContainer} from 'react-navigation';
-import MenuScreen from './MenuScreen';
-import Game from './Game';
-import EasyGame from './EasyGame'
-import ColorScreen from './ColorScreen'
+import MenuScreen from './src/MenuScreen';
+import Game from './src/Game';
+import EasyGame from './src/EasyGame'
+import ColorScreen from './src/ColorScreen'
 
 const MainNavigator = createStackNavigator({
   Menu: {screen: MenuScreen},
