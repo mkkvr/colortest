@@ -34,13 +34,15 @@ export class MenuScreen extends React.Component {
     return (
 
       <View style={styles.columns}>  
-{/*         <TouchableOpacity onPress={() => { navigate('Easy', {title: 'Easy Game'}) }}  style={styles.button}><Text>Easy</Text></TouchableOpacity>
+        <TouchableOpacity onPress={() => { navigate('Easy', {title: 'Easy Game'}) }}  style={styles.button}><Text>Easy</Text></TouchableOpacity>
         <TouchableOpacity onPress={() => { navigate('Game', {title: 'Game'}) }}  style={styles.button}><Text>Normal</Text></TouchableOpacity>
         <TouchableOpacity onPress={() => { navigate('Colors', {title: 'Colors'}) }}  style={styles.button}><Text>Colors</Text></TouchableOpacity>
- */}
-        <Button onPress={() => { navigate('Easy', {title: 'Easy Game'}) }} title="Easy"/>
+
+{/* 
+        <Button onPress={() => { navigate('Easy', {title: 'Easy Game'}) }} title="Easy" style={styles.button}/>
         <Button onPress={() => { navigate('Game', {title: 'Game'}) }} title="Normal"/>
         <Button onPress={() => { navigate('Colors', {title: 'Colors'}) }} title="Colors"/>
+         */}
   
       </View>
 

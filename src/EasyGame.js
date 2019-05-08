@@ -7,13 +7,7 @@ export class EasyGame extends GameScreen {
     title: 'Easy Game',
   };
 
-  constructor(props) {
-    super(props)
-    this.onPressButton = this.onPressButton.bind(this);
-    this.state = this.build(0,0)
-  }
-
-  build(rightCount, count) {
+  build(rightCount, count, lastColor) {
     var groupLength = colors['colors'].length
     var rightNumber = this.getRandomInt(groupLength)
     var rightItem = colors['colors'][rightNumber]
@@ -33,7 +27,7 @@ export class EasyGame extends GameScreen {
       }
     }
     
-    var newState = {right: rightItem, index: rightIndex, items: items, rightCount: rightCount, count: count}
+    var newState = {right: rightItem, index: rightIndex, items: items, rightCount: rightCount, count: count, lastColor: lastColor}
     return newState;
   
   }

@@ -10,50 +10,26 @@ export class GameScreen extends React.Component {
         return Math.floor(Math.random() * Math.floor(max));
       }
       
-  
     onPressButton(color, rgb) {
       var count = this.state.count
       var rightCount = this.state.rightCount
   
       count++;
   
-      if (rgb == this.state.right.rgb) 
+      var lastRight = 'red';
+      if (rgb == this.state.right.rgb) {
         rightCount++
-      this.setState(this.build(rightCount,count));
-    }
-  
-    build(rightCount, count) {
-      var groupNumber = this.getRandomInt(groupNames.length)
-      var groupName = groupNames[groupNumber]
-      var groupLength = groups[groupName].length
-  
-      var rightNumber = this.getRandomInt(groupLength)
-      var rightItem = groups[groupName][rightNumber]
-      var rightIndex = this.getRandomInt(3);
-  
-      var items = [3];
-      var otherNumber = rightNumber
-  
-      for (i = 0; i < 3; i++) {
-        if (rightIndex == i) items[i]=rightItem
-        else {
-          itemNumber = rightNumber
-          while (itemNumber == rightNumber || itemNumber == otherNumber)
-            itemNumber = this.getRandomInt(groupLength)
-          items[i] = groups[groupName][itemNumber]
-          otherNumber = itemNumber
-        }
+        lastRight = 'green';
       }
-      
-      var newState = {right: rightItem, index: rightIndex, items: items, rightCount: rightCount, count: count}
-      return newState;
-  
+      this.setState(this.build(rightCount,count,lastRight));
     }
+  
+    //     build(rightCount, count, lastColor)  ==> in sub classes
   
     constructor(props) {
       super(props)
       this.onPressButton = this.onPressButton.bind(this);
-      this.state = this.build(0,0)
+      this.state = this.build(0,0, 'black')
     }
   
     render() {
@@ -62,23 +38,23 @@ export class GameScreen extends React.Component {
   
       return (
   
-        <View style={stylesColumn.container}>  
+        <View style={styles.column}>  
         
           <StatusBar backgroundColor="blue" barStyle="dark-content" hidden = {false} />
   
-          <View style={stylesTitle.container}>
-            <Text style={stylesPoints.container}>{this.state.rightCount}/{this.state.count}</Text>
-            <Text style={stylesText.container}>{this.state.right.color}</Text>
+          <View style={styles.title}>
+            <Text style={[stylesPoints.normal, {color : this.state.lastColor}]}>{this.state.rightCount}/{this.state.count}</Text>
+            <Text style={styles.text}>{this.state.right.color}</Text>
           </View>
   
-          <View style={stylesRow.container}>
+          <View style={styles.row}>
             <ColorButton text={this.state.items[0].color} color={this.state.items[0].color} rgb={this.state.items[0].rgb} function={this.onPressButton}/>
             <ColorButton text={this.state.items[1].color} color={this.state.items[1].color} rgb={this.state.items[1].rgb} function={this.onPressButton}/>
             <ColorButton text={this.state.items[2].color} color={this.state.items[2].color} rgb={this.state.items[2].rgb} function={this.onPressButton}/>
           </View>
   
-          <View style={stylesRow.container}>
-            <Button title="Restart" onPress={() => { this.setState(this.build(0,0)) }}/>
+          <View style={styles.row}>
+            <Button title="Restart" onPress={() => { this.setState(this.build(0,0,0)) }}/>
           </View>
   
         </View>
@@ -88,8 +64,8 @@ export class GameScreen extends React.Component {
   
   }
   
-  const stylesColumn = StyleSheet.create({
-    container: {
+  const styles = StyleSheet.create({
+    column: {
       flex: 1,
       flexDirection: 'column',
       backgroundColor: '#fff',
@@ -97,10 +73,7 @@ export class GameScreen extends React.Component {
       justifyContent: 'space-evenly',
       borderWidth : 0,
     },
-  });
-  
-  const stylesTitle = StyleSheet.create({
-    container: {
+   title: {
       flex: 0.5,
       flexDirection: 'column',
       backgroundColor: '#fff',
@@ -108,10 +81,7 @@ export class GameScreen extends React.Component {
       justifyContent: 'center',
       borderWidth : 0,
     },
-  });
-  
-  const stylesRow = StyleSheet.create({
-    container: {
+    row: {
       flex: 0.5,
       flexDirection: 'row',
       backgroundColor: '#fff',
@@ -119,19 +89,26 @@ export class GameScreen extends React.Component {
       justifyContent: 'center',
       borderWidth : 0,
     },
-  });
-  
-  const stylesText = StyleSheet.create({
-    container: {
+    text: {
       fontSize: 30,
       fontWeight: 'bold',
     }
   });
   
   const stylesPoints = StyleSheet.create({
-    container: {
+    normal: {
       fontSize: 20,
       fontWeight: 'bold',
+    },
+    green: {
+      fontSize: 20,
+      fontWeight: 'bold',
+      color: 'green'
+    },
+    red: {
+      fontSize: 20,
+      fontWeight: 'bold',
+      color: 'red'
     }
   });
   
@@ -144,7 +121,7 @@ export class GameScreen extends React.Component {
     }
   
     setColors() {
-      styles = StyleSheet.create({
+      stylesForColors = StyleSheet.create({
         container: {
            backgroundColor: this.props.rgb,
            height: 100,
@@ -160,12 +137,12 @@ export class GameScreen extends React.Component {
       this.setColors()
   
       return (
-        <View style={stylesRow.container}>
+        <View style={styles.row}>
         <TouchableOpacity
           onPress={() => {
             this.props.function(this.props.color, this.props.rgb)
           }}
-          style={styles.container}
+          style={stylesForColors.container}
           >
           {/*  <Text>{this.props.color}</Text> */}
         </TouchableOpacity>
