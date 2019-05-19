@@ -1,11 +1,11 @@
 import React from 'react';
-import { StyleSheet, View, TouchableOpacity, Text, Button } from 'react-native';
+import { StyleSheet, View, TouchableOpacity, Text, ImageBackground, Button } from 'react-native';
 
 const styles= StyleSheet.create({
     columns: {
       flex: 1,
       flexDirection: 'column',
-      backgroundColor: '#fff',
+      // backgroundColor: '#fff',
       alignItems: 'center',
       justifyContent: 'space-evenly',
       borderWidth : 0,
@@ -33,6 +33,7 @@ export class MenuScreen extends React.Component {
 
     return (
 
+      <ImageBackground source={require('../background.png')} style={{width: '100%', height: '100%'}}>
       <View style={styles.columns}>  
         <TouchableOpacity onPress={() => { navigate('Easy', {title: 'Easy Game'}) }}  style={styles.button}><Text>Easy</Text></TouchableOpacity>
         <TouchableOpacity onPress={() => { navigate('Game', {title: 'Game'}) }}  style={styles.button}><Text>Normal</Text></TouchableOpacity>
@@ -45,6 +46,7 @@ export class MenuScreen extends React.Component {
          */}
   
       </View>
+      </ImageBackground>
 
     );
   }
