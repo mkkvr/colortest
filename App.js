@@ -10,6 +10,14 @@ const MainNavigator = createStackNavigator({
   Game: {screen: Game},
   Easy: {screen: EasyGame},
   Colors: {screen: ColorScreen},
+}, {
+  defaultNavigationOptions: {
+    headerTintColor: '#fff',
+    headerStyle: {
+      backgroundColor: '#000',
+    },
+  },
+  headerLayoutPreset: 'center'
 });
 
 
