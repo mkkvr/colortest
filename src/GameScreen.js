@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, StyleSheet, Text, View, StatusBar, TouchableOpacity } from 'react-native';
+import { Button, StyleSheet, Text, View, StatusBar, TouchableOpacity, Alert } from 'react-native';
 import groups from './groups.json';
 
 var groupNames = new Array('Reds', 'Pinks', 'Oranges', 'Yellows', 'Purples', 'Greens', 'Blues', 'Browns', 'Whites', 'Greys') 
@@ -13,6 +13,7 @@ export class GameScreen extends React.Component {
     onPressButton(color, rgb) {
       var count = this.state.count
       var rightCount = this.state.rightCount
+      var { navigate } = this.props.navigation;
   
       count++;
   
@@ -21,7 +22,25 @@ export class GameScreen extends React.Component {
         rightCount++
         lastRight = 'green';
       }
+
       this.setState(this.build(rightCount,count,lastRight));
+
+      if (count == 25) {
+        var scoreMessage = 'Go learn some more!'
+        if (rightCount > 15) scoreMessage = 'You seem to know something'
+        if (rightCount > 20) scoreMessage = 'That is not too bad!'
+        Alert.alert(
+          'Game completed',
+          scoreMessage,
+          [
+            {text: 'Return', onPress: () => navigate('Menu', {title: 'Color Test'})},
+            {text: 'Continue', onPress: () => console.log('Continue')},
+            {text: 'Restart', onPress: () => this.setState(this.build(0,0,0))},
+            
+          ],
+          {cancelable: false},
+        );
+      }
     }
   
     //     build(rightCount, count, lastColor)  ==> in sub classes
